@@ -12,7 +12,7 @@ function App() {
     <React.Fragment>
       <Switch>
       <Route path='/' exact><AuthPage/></Route>
-      <Route path='/welcome'><Welcome/></Route>
+      <Route path='/welcome' exact><Welcome/></Route>
       <Route path="/profile"><ProfilePage/></Route>
       </Switch>
     </React.Fragment>

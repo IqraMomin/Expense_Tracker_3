@@ -1,12 +1,14 @@
 import React, { useContext, useState } from 'react'
 import "./AuthHeader.css";
 import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function AuthHeader(props) {
     const authCtx = useContext(AuthContext);
     const isLoggedIn = authCtx.isLoggedIn;
     const token = authCtx.token;
     const [error,setError] = useState("");
+    const history = useHistory();
 
     const emailVerificationHanlder = async ()=>{
         if(!token){
@@ -40,10 +42,16 @@ function AuthHeader(props) {
         }
 
     }
+    const logoutHandler = ()=>{
+        authCtx.logout();
+        history.replace("/");
+
+    }
     return (
         <div className='auth-header-div'>
             <p className='title'>{props.title}</p>
             {isLoggedIn && <button onClick={emailVerificationHanlder}>Verify your email</button>}
+            {isLoggedIn && <button onClick={logoutHandler}>Logout</button>}
             <p className='desc'>{props.description}
             <button onClick={props.onClick}>{props.text}</button>
             </p>

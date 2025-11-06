@@ -93,9 +93,9 @@ function AuthForm() {
                 {isLogin && <Link to="#">Forgot Password</Link>}
             </div>
             {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
-            {!isLogin && <button className='auth-btn' onClick={() => {
+            <button className='auth-btn' onClick={() => {
                 setIsLogin(prev => !prev);
-            }}>Have an account?Login</button>}
+            }}> {isLogin?"Create New Account":"Have an account?Login"}</button>
         </div>
     )
 }
