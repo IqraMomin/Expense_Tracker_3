@@ -1,0 +1,10 @@
+.auth-header-div{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    border-bottom: 2px solid gray;
+}
