@@ -81,8 +81,9 @@ function AuthForm() {
         }
     }
     return (
+        <div className='auth-div'>
         <div className='auth-main-div'>
-            <div className='auth-div'>
+            
                 <h2>{isLogin ? "Login" : "SignUp"}</h2>
                 <form onSubmit={formSubmitHandler}>
                     <input type='email' placeholder='Email' ref={emailInputRef} />
@@ -90,12 +91,13 @@ function AuthForm() {
                     {!isLogin && <input type='password' placeholder='Confirm Password' ref={confirmInputRef} />}
                     <button type='submit'>{isLogin ? "Login" : "SignUp"}</button>
                 </form>
-                {isLogin && <Link to="#">Forgot Password</Link>}
-            </div>
+                {isLogin && <Link to="/reset">Forgot Password</Link>}
+            
             {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
             <button className='auth-btn' onClick={() => {
                 setIsLogin(prev => !prev);
             }}> {isLogin?"Create New Account":"Have an account?Login"}</button>
+        </div>
         </div>
     )
 }

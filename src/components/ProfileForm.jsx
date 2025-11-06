@@ -24,8 +24,8 @@ function ProfileForm() {
             if(response.ok){
                 const data =await response.json();
                 console.log(data);
-                nameInputRef.current.value=data.users[0].displayName;
-                photoInputRef.current.value=data.users[0].photoUrl
+                nameInputRef.current.value=(data.users[0].displayName)||"";
+                photoInputRef.current.value=(data.users[0].photoUrl)||"";
             }else{
                 let errorMessage = "Update Failed";
                 if(data && data.error && data.error.message){
