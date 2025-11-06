@@ -4,8 +4,8 @@ import "./AuthHeader.css";
 function AuthHeader(props) {
     return (
         <div className='auth-header-div'>
-            <p>{props.title}</p>
-            <p>{props.description}
+            <p className='title'>{props.title}</p>
+            <p className='desc'>{props.description}
             <button onClick={props.onClick}>{props.text}</button>
             </p>
         </div>

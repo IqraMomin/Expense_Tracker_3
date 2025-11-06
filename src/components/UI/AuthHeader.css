@@ -7,4 +7,25 @@
     justify-content: space-between;
     font-style: italic;
     border-bottom: 2px solid gray;
+    margin: 0 0.75rem;
+}
+.desc{
+    background-color: rgb(212, 209, 209);
+    max-width: 400px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    text-align: left;
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+.auth-header-div button{
+    background: none;
+    color: blue;
+    font-style: italic;
+    border: none;
+    outline: none;
+    line-height: 0%;
+}
+.title{
+    font-size: 20px;
 }
