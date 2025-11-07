@@ -1,21 +1,41 @@
-import React, { useRef ,useContext} from 'react'
+import React, { useRef ,useContext, useEffect} from 'react'
 import ExpenseContext from '../store/expense-context';
 
-function ExpenseForm() {
+function ExpenseForm({editExpense,onEditComplete}) {
     const amountInputRef = useRef();
     const titleInputRef = useRef();
     const optionInputRef = useRef();
     const expenseCtx = useContext(ExpenseContext);
 
+    useEffect(()=>{
+        if(editExpense){
+            amountInputRef.current.value=editExpense.amount;
+            titleInputRef.current.value=editExpense.title;
+            optionInputRef.current.value = editExpense.category||""           
+
+        }else{
+            amountInputRef.current.value="";
+            titleInputRef.current.value="";
+            
+        }
+    },[editExpense]);
+
     const formSubmitHandler = (event)=>{
         event.preventDefault();
         const data = {
-            expenseId:Date.now().toString(),
             amount:amountInputRef.current.value,
             title:titleInputRef.current.value,
             category:optionInputRef.current.value
         }
-        expenseCtx.addExpense(data);
+        if(editExpense){
+            expenseCtx.editExpense(editExpense.id,data);
+            onEditComplete();
+        }else{
+            expenseCtx.addExpense(data);
+        }
+       
+        titleInputRef.current.value="";
+        amountInputRef.current.value="";
     }
     return (
         <div>
@@ -29,7 +49,7 @@ function ExpenseForm() {
                     <option value="pretol">Pretol</option>
                     <option value="salary">Salary</option>
                 </select>
-                <button>Add Expense</button>
+                <button>{editExpense ?"Update Expense": "Add Expense"}</button>
             </form>
             
         </div>

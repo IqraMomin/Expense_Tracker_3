@@ -4,7 +4,8 @@ import axios from 'axios'
 const ExpenseContext = React.createContext({
     expenseList:[],
     addExpense:(item)=>{},
-    removeExpense:(id)=>{}
+    removeExpense:(id)=>{},
+    editExpense:(item)=>{}
 })
 const defaultValue = {
     expenseList:[]
@@ -15,6 +16,21 @@ const reducer = (state,action)=>{
 
         return{
             expenseList:updatedList
+        }
+    }
+    if(action.type==="REMOVE"){
+        const updatedList=state.expenseList.filter(ele=>{
+            return ele.id!==action.id
+        });
+        return{
+            expenseList:updatedList
+        }
+    }
+    if(action.type==="EDIT"){
+        return {
+            expenseList:state.expenseList.map(ele=>{
+                return ele.id===action.id ? {...ele,...action.updatedItem}:ele
+            })
         }
     }
     if(action.type==="FETCH"){
@@ -49,10 +65,13 @@ useEffect(()=>{
 },[])
 
 const addExpenseHandler = async(item)=>{
-    dispatchExpense({type:"ADD",item});
     try{
         const response = await axios.post("https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses.json",item);
-        console.log(response.data);
+        const newItem = {
+            id:response.data.name,
+            ...item
+        }
+        dispatchExpense({type:"ADD",item:newItem});
 
     }catch(err){
         console.log(err);
@@ -60,16 +79,32 @@ const addExpenseHandler = async(item)=>{
     }
 
 }
-const removeExpenseHanlder = (id)=>{
-    console.log(id);
+const removeExpenseHanlder = async(id)=>{
+    try{
+        const response = await axios.delete(`https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses/${id}.json`);
+        dispatchExpense({type:"REMOVE",id});
+
+    }catch(err){
+        console.log(err);
+    }
     
+
+}
+const editExpenseHandler =async (id,updatedItem)=>{
+    try{
+        const response = await axios.put(`https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses/${id}.json`,updatedItem);
+        dispatchExpense({type:"EDIT",id,updatedItem});
+    }catch(err){
+        console.log(err);
+    }
 
 }
 
     const contextValue={
         expenseList:expense.expenseList,
         addExpense:addExpenseHandler,
-        removeExpense:removeExpenseHanlder
+        removeExpense:removeExpenseHanlder,
+        editExpense:editExpenseHandler
         
     }
 
