@@ -51,6 +51,7 @@ function AuthHeader(props) {
         <div className='auth-header-div'>
             <p className='title'>{props.title}</p>
             {isLoggedIn && <button onClick={emailVerificationHanlder}>Verify your email</button>}
+            {isLoggedIn && <button onClick={()=>{history.replace("/expensepage")}}>Add Expense</button>}
             {isLoggedIn && <button onClick={logoutHandler}>Logout</button>}
             <p className='desc'>{props.description}
             <button onClick={props.onClick}>{props.text}</button>

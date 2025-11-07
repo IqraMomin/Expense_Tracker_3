@@ -83,15 +83,17 @@ function AuthForm() {
     return (
         <div className='auth-div'>
         <div className='auth-main-div'>
-            
-                <h2>{isLogin ? "Login" : "SignUp"}</h2>
+
+                <br/>
+                <h2 style={{color:"rgb(207, 211, 210)"}}>{isLogin ? "Login" : "SignUp"}</h2>
                 <form onSubmit={formSubmitHandler}>
                     <input type='email' placeholder='Email' ref={emailInputRef} />
                     <input type='password' placeholder='Password' ref={passwordInputRef} />
                     {!isLogin && <input type='password' placeholder='Confirm Password' ref={confirmInputRef} />}
+                    <br/>
                     <button type='submit'>{isLogin ? "Login" : "SignUp"}</button>
                 </form>
-                {isLogin && <Link to="/reset">Forgot Password</Link>}
+                {isLogin && <Link style={{color:"rgb(207, 211, 210)"}} to="/reset">Forgot Password</Link>}
             
             {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
             <button className='auth-btn' onClick={() => {

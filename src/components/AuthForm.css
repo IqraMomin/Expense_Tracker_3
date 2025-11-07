@@ -10,15 +10,18 @@
     justify-content: center;
 }
 .auth-div input{
-    width: 95%;
+    width: 30vw;
     height: 2rem;
     border-radius: 5px;
     margin-bottom: 0.5rem;
     background-color: rgb(207, 211, 210);
     color: black;
+    outline: none;
 }
 .auth-div button{
     background-color: black;
+    width: 70%;
+    height: 55px;
     outline: none;
     color: rgb(207, 211, 210);
 }
@@ -28,10 +31,15 @@
     display: flex;
     justify-content: start;
     box-shadow: 
-  2px 2px 5px rgba(0, 0, 0, 0.3),
-  -2px -2px 5px rgba(182, 127, 127, 0.5);
-
-
+  5px 5px 10px rgba(0, 0, 0, 0.578),
+  -5px -5px 15px rgba(2, 2, 2, 0.5);
+}
+.auth-main-div{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 1rem;
+   padding: 1rem;
 }
 .auth-main img{
     width: 25vw;
