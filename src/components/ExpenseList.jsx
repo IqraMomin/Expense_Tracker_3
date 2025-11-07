@@ -8,11 +8,11 @@ function ExpenseList() {
         <ul>
             {expenseCtx.expenseList.map(ele=>{
                 return <ExpenseItem
-                key={ele.id}
-                id={ele.id}
+                key={ele.expenseId}
+                id={ele.expenseId}
                 amount={ele.amount}
-                description={ele.description}
-                expense={ele.expense}/>
+                title={ele.title}
+                category={ele.category}/>
             })}
         </ul>
     )
