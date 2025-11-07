@@ -83,6 +83,7 @@ const removeExpenseHanlder = async(id)=>{
     try{
         const response = await axios.delete(`https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses/${id}.json`);
         dispatchExpense({type:"REMOVE",id});
+        console.log("Expense Successfully deleted");
 
     }catch(err){
         console.log(err);
