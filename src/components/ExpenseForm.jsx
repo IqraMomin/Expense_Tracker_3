@@ -1,11 +1,14 @@
-import React, { useRef ,useContext, useEffect} from 'react'
-import ExpenseContext from '../store/expense-context';
+import React, { useRef , useEffect} from 'react'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { expenseActions } from '../store/expenseSlice';
 
 function ExpenseForm({editExpense,onEditComplete}) {
     const amountInputRef = useRef();
     const titleInputRef = useRef();
     const optionInputRef = useRef();
-    const expenseCtx = useContext(ExpenseContext);
+    const dispatch = useDispatch();
+
 
     useEffect(()=>{
         if(editExpense){
@@ -28,15 +31,33 @@ function ExpenseForm({editExpense,onEditComplete}) {
             category:optionInputRef.current.value
         }
         if(editExpense){
-            expenseCtx.editExpense(editExpense.id,data);
+            editExpenseHandler(editExpense.id,data);
             onEditComplete();
         }else{
-            expenseCtx.addExpense(data);
+            addExpenseHandler(data);
         }
        
         titleInputRef.current.value="";
         amountInputRef.current.value="";
     }
+
+    const addExpenseHandler = async (item) => {
+        const res = await axios.post(
+          "https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses.json",
+          item
+        );
+        const newItem = { id: res.data.name, ...item };
+        dispatch(expenseActions.addExpense(newItem));
+      };
+    
+      const editExpenseHandler = async (id, updatedItem) => {
+        await axios.put(
+          `https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses/${id}.json`,
+          updatedItem
+        );
+        dispatch(expenseActions.editExpense({ id, updatedItem }));
+      };
+    
     return (
         <div>
             <form onSubmit={formSubmitHandler}>
