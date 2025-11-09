@@ -1,8 +1,9 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import "./AuthForm.css";
 import { Link } from 'react-router-dom';
-import AuthContext from '../store/auth-context';
+import { authActions } from '../store/authSlice';
 import {useHistory} from "react-router-dom";
+import { useDispatch } from 'react-redux';
 
 function AuthForm() {
     const [isLogin, setIsLogin] = useState(false);
@@ -10,7 +11,7 @@ function AuthForm() {
     const passwordInputRef = useRef();
     const confirmInputRef = useRef();
     const [error, setError] = useState("");
-    const authCtx = useContext(AuthContext);
+    const dispatch= useDispatch();
     const history = useHistory();
 
     const formSubmitHandler = async (event) => {
@@ -44,7 +45,7 @@ function AuthForm() {
                 })               
                 if(response.ok){
                     const data = await response.json();
-                    authCtx.login(data.idToken);
+                    dispatch(authActions.login(data.idToken))
                     history.replace("/welcome");
                     
                 }else{

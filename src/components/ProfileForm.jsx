@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useRef } from 'react'
-import AuthContext from '../store/auth-context';
+import React, { useEffect, useRef } from 'react'
+import {useSelector } from 'react-redux';
 import "./ProfileForm.css"
 import {FaUser,FaGlobe} from "react-icons/fa";
 
 function ProfileForm() {
     const nameInputRef = useRef();
     const photoInputRef = useRef();
-    const authCtx = useContext(AuthContext);
-    const token = authCtx.token;
+    const token = useSelector(state=>state.auth.token);
 
     const fetchData=async()=>{
         if(!token) return;

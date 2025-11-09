@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import "./AuthHeader.css";
-import AuthContext from '../../store/auth-context';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useSelector, useDispatch } from 'react-redux';
+import { authActions } from '../../store/authSlice';
 
 function AuthHeader(props) {
-    const authCtx = useContext(AuthContext);
-    const isLoggedIn = authCtx.isLoggedIn;
-    const token = authCtx.token;
+    //const authCtx = useContext(AuthContext);
+    const dispatch= useDispatch();
+    const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
+    const token = useSelector(state=>state.auth.token);
     const [error,setError] = useState("");
     const history = useHistory();
 
@@ -43,7 +45,7 @@ function AuthHeader(props) {
 
     }
     const logoutHandler = ()=>{
-        authCtx.logout();
+        dispatch(authActions.logout());
         history.replace("/");
 
     }

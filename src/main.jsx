@@ -2,15 +2,16 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import { AuthProvider } from './store/auth-context'
 import { ExpenseProvider } from './store/expense-context'
+import store from './store/index'
+import { Provider } from 'react-redux'
 
 createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <ExpenseProvider>
-    <AuthProvider>
+    <Provider store={store}>
     <App />
-    </AuthProvider>
+    </Provider>
     </ExpenseProvider>
     </BrowserRouter>,
 )
