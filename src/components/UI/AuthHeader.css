@@ -9,6 +9,7 @@
     border-bottom: 2px solid gray;
     margin: 0 0.75rem;
 }
+
 .desc{
     background-color: rgb(212, 209, 209);
     max-width: 400px;
@@ -20,7 +21,7 @@
 }
 .auth-header-div button{
     background: none;
-    color: blue;
+    color: black;
     font-style: italic;
     border: none;
     outline: none;
@@ -28,4 +29,17 @@
 }
 .title{
     font-size: 20px;
+}
+.headers-actions{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.dark-theme{
+    background-color: rgb(122, 95, 37);
+    color: antiquewhite;
+}
+.light-theme{
+    background-color: beige;
+    color: black;
 }

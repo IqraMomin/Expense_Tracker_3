@@ -36,10 +36,13 @@ const expenseSlice = createSlice({
         },
         setExpenses:(state, action) =>{
             state.expenseList = action.payload;
-            state.totalExpense = action.payload.reduce((sum,item)=>{
-                return sum+Number(item.amount)
-            },0);
-          }
+            state.totalExpense = action.payload.reduce(
+                (sum, item) => sum + Number(item.amount),
+                0
+              );
+              console.log(state.totalExpense);
+          },
+         
     }
 });
 export const expenseActions = expenseSlice.actions;

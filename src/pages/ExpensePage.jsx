@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Expense from '../components/Expense'
+import AuthHeader from '../components/UI/AuthHeader'
 
 function ExpensePage() {
     return (
-       <Expense/>
+        <Fragment>
+            <AuthHeader/>
+            <Expense />
+        </Fragment>
+
     )
 }
 
