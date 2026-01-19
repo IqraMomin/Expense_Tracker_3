@@ -1,59 +1,84 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
-import AuthPage from './pages/AuthPage'
-import { Route ,Switch} from 'react-router-dom'
-import Welcome from './pages/Welcome'
-import ProfilePage from './pages/ProfilePage'
-import ResetPassword from './components/ResetPassword'
-import ExpensePage from './pages/ExpensePage'
+import { Route } from 'react-router-dom'
+import { useSelector ,useDispatch } from 'react-redux'
+import { Col, Container, Row } from 'react-bootstrap'
+import Sidebar from './components/Sidebar.jsx'
+import DashboardContent from './components/Dashboard/DashboardContent'
+import Expense from './components/Expense/Expense'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
-import { useDispatch, useSelector } from 'react-redux'
-import { expenseActions } from './store/expenseSlice'
-import axios from 'axios'
+import AuthForm from "./components/Auth/AuthForm"
+import ResetPassword from './components/Auth/ResetPassword'
+import { fetchExpenses } from './store/expense-actions'
+
+
+
 
 function App() {
+
+  const isLogin = useSelector(state => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const response = await axios.get(
-          "https://expense-tracker-e3353-default-rtdb.firebaseio.com/expenses.json"
-        );
-        const data = response.data;
-        const loadedExpenses = [];
-
-        for (const key in data) {
-          loadedExpenses.push({ id: key, ...data[key] });
-        }
-        console.log("Loaded Expenses",loadedExpenses);
-        dispatch(expenseActions.setExpenses(loadedExpenses));
-      } catch (err) {
-        console.error("Error fetching expenses:", err);
-      }
-    };
-
-    fetchExpenses();
-  }, [dispatch]);
-
-
-
-  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
- 
   
+      dispatch(fetchExpenses());
+    }, [isLogin,dispatch]);
+  
+  
+
+ 
+
+
   return (
-    <React.Fragment>
-      <Switch>
-      <Route path='/' exact><AuthPage/></Route>
-      <Route path='/welcome'><Welcome/></Route>
-      <Route path="/profile"><ProfilePage/></Route>
-      <Route path="/reset"><ResetPassword/></Route>
-      <Route path="/expensepage">
-      {isLoggedIn && <ExpensePage/>}
-      {!isLoggedIn && <Redirect to="/"/>}
-      </Route>
-      </Switch>
-    </React.Fragment>
+
+    <Container fluid className='p-0'>
+      {!isLogin && (
+        <>
+          <Route path="/" exact>
+            <AuthForm />
+          </Route>
+
+          <Route path="/authpage" exact>
+            <AuthForm />
+          </Route>
+          <Route path="/reset">
+            <ResetPassword/>
+          </Route>
+
+          {/* If user tries to open dashboard when not logged in */}
+          <Route path="/welcome">
+            <Redirect to="/authpage" />
+          </Route>
+
+          <Route path="/expensepage">
+            <Redirect to="/authpage" />
+          </Route>
+        </>
+      )}
+
+    {/* SHOW DASHBOARD ONLY WHEN LOGGED IN */}
+    {isLogin && (
+      <Row>
+        <Col md={3} className="bg-light" style={{ height: "100vh" }}>
+          <Sidebar />
+        </Col>
+
+        <Col md={9} className="bg-dark text-white p-5" style={{ overflowX: "hidden" }}>
+          
+        <Route path="/"exact><DashboardContent/></Route>
+          <Route path="/welcome">
+            <DashboardContent />
+          </Route>
+
+          <Route path="/expensepage">
+            <Expense />
+          </Route>
+          
+
+        </Col>
+      </Row>
+    )}
+  </Container>
   )
 }
 

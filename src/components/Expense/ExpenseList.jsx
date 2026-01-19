@@ -2,6 +2,8 @@ import React,{Fragment} from 'react'
 import ExpenseItem from './ExpenseItem';
 import { useSelector } from 'react-redux';
 import { CSVLink } from 'react-csv';
+import { Table } from 'react-bootstrap';
+import "../Dashboard/RecentTransaction.css"
 
 
 function ExpenseList({onEdit}) {
@@ -15,14 +17,27 @@ function ExpenseList({onEdit}) {
     
     return (
         <Fragment>
-        <ul>
-            {expenseList.map(ele=>{
+            <Table striped bordered={false} hover responsive className='recent-table bg-light mt-3'>
+            <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Edit Expense</th>
+                    <th>Remove Expense</th>
+                    
+                    </tr>
+                </thead>
+                <tbody>
+                {expenseList.map(ele=>{
                 return <ExpenseItem
                 key={ele.id}
                 expense={ele}
                 onEdit={onEdit}/>
             })}
-        </ul>
+                </tbody>
+            </Table>
         {premium && <CSVLink 
         data={expenseList}
         headers={headers}

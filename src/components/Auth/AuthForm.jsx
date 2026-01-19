@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import "./AuthForm.css";
 import { Link } from 'react-router-dom';
-import { authActions } from '../store/authSlice';
+import { authActions } from '../../store/authSlice';
 import {useHistory} from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import { Container } from 'react-bootstrap';
 
 function AuthForm() {
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
     const confirmInputRef = useRef();
@@ -32,7 +33,8 @@ function AuthForm() {
 
         const userData = {
             email: emailInputRef.current.value,
-            password: passwordInputRef.current.value
+            password: passwordInputRef.current.value,
+            returnSecureToken:true
         }
         if (isLogin) {
             try {
@@ -45,6 +47,7 @@ function AuthForm() {
                 })               
                 if(response.ok){
                     const data = await response.json();
+                    console.log(data);
                     dispatch(authActions.login(data.idToken))
                     history.replace("/welcome");
                     
@@ -54,7 +57,7 @@ function AuthForm() {
                 }
 
             } catch (err) {
-
+                alert(err);
             }
 
         } else {
@@ -82,27 +85,86 @@ function AuthForm() {
         }
     }
     return (
-        <div className='auth-div'>
-        <div className='auth-main-div'>
-
-                <br/>
-                <h2 style={{color:"rgb(207, 211, 210)"}}>{isLogin ? "Login" : "SignUp"}</h2>
-                <form onSubmit={formSubmitHandler}>
-                    <input type='email' placeholder='Email' ref={emailInputRef} />
-                    <input type='password' placeholder='Password' ref={passwordInputRef} />
-                    {!isLogin && <input type='password' placeholder='Confirm Password' ref={confirmInputRef} />}
-                    <br/>
-                    <button type='submit'>{isLogin ? "Login" : "SignUp"}</button>
-                </form>
-                {isLogin && <Link style={{color:"rgb(207, 211, 210)"}} to="/reset">Forgot Password</Link>}
-            
-            {error && <p style={{ color: "red", fontWeight: "bold" }}>{error}</p>}
-            <button className='auth-btn' onClick={() => {
-                setIsLogin(prev => !prev);
-            }}> {isLogin?"Create New Account":"Have an account?Login"}</button>
-        </div>
-        </div>
-    )
+        <Container fluid
+          className="d-flex justify-content-center align-items-center vh-100"
+          style={{ backgroundColor: "#1e1e1e" }}
+        >
+          <div
+            className="p-4 shadow-lg"
+            style={{
+              width: "380px",
+              background: "#ffffff",
+              borderRadius: "16px",
+            }}
+          >
+            <h3 className="text-center mb-4" style={{ color: "#6f42c1" }}>
+              {isLogin ? "Login" : "Sign Up"}
+            </h3>
+      
+            <form onSubmit={formSubmitHandler}>
+              <div className="mb-3">
+                <input
+                  type="email"
+                  className="form-control py-2"
+                  placeholder="Email"
+                  ref={emailInputRef}
+                />
+              </div>
+      
+              <div className="mb-3">
+                <input
+                  type="password"
+                  className="form-control py-2"
+                  placeholder="Password"
+                  ref={passwordInputRef}
+                />
+              </div>
+      
+              {!isLogin && (
+                <div className="mb-3">
+                  <input
+                    type="password"
+                    className="form-control py-2"
+                    placeholder="Confirm Password"
+                    ref={confirmInputRef}
+                  />
+                </div>
+              )}
+      
+              {error && <p className="text-danger fw-bold">{error}</p>}
+      
+              <button
+                type="submit"
+                className="btn w-100 py-2 mt-2"
+                style={{
+                  backgroundColor: "#6f42c1",
+                  color: "white",
+                  borderRadius: "8px",
+                }}
+              >
+                {isLogin ? "Login" : "Sign Up"}
+              </button>
+            </form>
+      
+            {isLogin && (
+              <div className="text-center mt-3">
+                <Link to="/reset" style={{ color: "#6f42c1" }}>
+                  Forgot Password?
+                </Link>
+              </div>
+            )}
+      
+            <button
+              className="btn btn-outline-secondary w-100 mt-3"
+              onClick={() => setIsLogin((prev) => !prev)}
+              style={{ borderRadius: "8px" }}
+            >
+              {isLogin ? "Create New Account" : "Have an account? Login"}
+            </button>
+          </div>
+        </Container>
+      );
+      
 }
 
 export default AuthForm

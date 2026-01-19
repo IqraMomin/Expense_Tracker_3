@@ -5,7 +5,6 @@ import AuthHeader from '../components/UI/AuthHeader'
 function ExpensePage() {
     return (
         <Fragment>
-            <AuthHeader/>
             <Expense />
         </Fragment>
 

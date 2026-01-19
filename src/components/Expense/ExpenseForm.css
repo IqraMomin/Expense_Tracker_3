@@ -1,0 +1,54 @@
+.new-expense-controls {
+    padding: 2rem;
+    width: 100%;
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+    color: black;
+    margin-top: 0;
+}
+
+.new-expense-control label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+.new-expense-actions{
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
+.new-expense-control input {
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 20rem;
+    max-width: 100%;
+    background-color: azure;
+    color: black;
+}
+
+
+.seperate-form {
+    display: none;
+}
+.my-select {
+    padding: 8px 12px;
+    width: 20rem;
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: azure;
+    color: black;
+  }
+  .new-expense-heading{
+    width: 100%;
+    font-weight: bold;
+    font-size: larger;
+    text-align: center;
+
+  }
