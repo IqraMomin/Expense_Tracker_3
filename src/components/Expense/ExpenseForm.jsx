@@ -4,7 +4,7 @@ import { editExpenses } from '../../store/expense-actions';
 import "./ExpenseForm.css";
 import { addExpense } from '../../store/expense-actions';
 
-function ExpenseForm({ editExpense, onEditComplete }) {
+function ExpenseForm({ editExpense, onEditComplete ,onClose}) {
     const amountInputRef = useRef();
     const titleInputRef = useRef();
     const optionInputRef = useRef();
@@ -95,7 +95,10 @@ function ExpenseForm({ editExpense, onEditComplete }) {
                 </div>
                 <br/>
                 <div className='new-expense-actions'>
+                <button onClick={onClose}>Close</button>
+                    
                     <button>{editExpense ? "Update Expense" : "Add Expense"}</button>
+
                     {editExpense && <button onClick={onEditComplete}>Cancel</button>}
                 </div>
             </div>
